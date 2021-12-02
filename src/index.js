@@ -2,15 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { GlobalProvider } from './context/Context';
-import reducer, { initialState } from './context/reducer';
+import Context from './context/Context.config';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalProvider initialState={initialState} reducer={reducer}>
+    <Context>
       <App />
-    </GlobalProvider>
+    </Context>
   </React.StrictMode>,
   document.getElementById('root')
 );

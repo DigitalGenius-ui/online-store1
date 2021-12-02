@@ -1,4 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body{
+    background-color: #7777771e;
+}
+
 a{
     text-decoration: none !important;
     color: white !important;
+}
+
+.select{
+    text-transform:uppercase;
+    border-bottom:1px solid #00000071;
+    padding-bottom : 0.5rem;
+    padding-top : 0.5rem;
+    cursor : pointer;
+    transition: all 500ms;
+}
+
+.select:hover {
+    background-color : #1c1d1d07;
+}
+
+.transform{
+    transition : transform 500ms;
+    font-size: 1rem;
+    font-weight : 400;
+}
+
+.select:hover > .transform{
+    transform: translate(10px);
 }

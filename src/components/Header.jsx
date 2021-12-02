@@ -1,34 +1,71 @@
-import React, { useContext } from 'react';
-import { Badge, Container, Dropdown, FormControl, Nav, Navbar } from 'react-bootstrap';
-import { HiShoppingCart } from 'react-icons/hi'
-import { useGlobalContext } from '../context/Context';
-import {  Link} from "react-router-dom";
+import { AppBar, Badge, Container, makeStyles, Typography } from '@material-ui/core';
+import React,{useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@material-ui/icons/Search';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { ProductState } from '../context/Context.config';
 
-function Header() {
-    const [{baskets}] = useGlobalContext();
+const Header = () => {
+    const navigate = useNavigate();
+    const [open, setOpen] = useState(false)
+    const { productState } = ProductState();
+
+
+    const useStyles = makeStyles((theme) => ({
+    
+        logo:{
+            textTransform : "uppercase",
+            fontWeight : 600,
+            cursor : "pointer"
+        },
+        nav:{
+            textTransform : "uppercase",
+            fontWeight : 500
+        },
+        container:{
+            display : "flex",
+            justifyContent : "space-between",
+            alignItems : "center"
+        },
+        input:{
+            display : "flex",
+            alignItems : "center"
+        }
+    }));
+
+    const classes = useStyles();
     return (
-        <Navbar bg="dark" variant="dark" style={{height : 80}}>
-            <Container>
-                <Link to="/">
-                    <Navbar.Brand>
-                        <a href='/'>Shopping Cart</a>
-                    </Navbar.Brand>
-                </Link>
-                <Navbar.Text className="search">
-                    <FormControl style= {{width:500}} placeholder="Search for Product" className="m-auto"/>
-                </Navbar.Text>
-                <Nav>
-                    <Link to="/cart">
-                        <Dropdown>
-                            <Dropdown.Toggle variant="success">
-                                <HiShoppingCart style={{fontSize :25, marginRight: 5}} />
-                                <Badge>{baskets?.length}</Badge>
-                            </Dropdown.Toggle>
-                        </Dropdown>
-                    </Link>
-                </Nav>
+        <AppBar color ="inherit"
+        style={{padding : 20}}
+        position="static"
+        >
+            <Container className={classes.container}>
+                <Typography variant="h5" className={classes.logo}
+                onClick={() => navigate('/')}
+                >
+                    online store
+                </Typography>
+                <Typography variant="subtitle1" className={classes.nav}>
+                    <span style={{marginRight : 15, cursor : "pointer"}}>shop</span>
+                    <span style={{marginRight : 15, cursor : "pointer"}}>blog</span>
+                    <span style={{marginRight : 15, cursor : "pointer"}}>portfolio</span>
+                </Typography>
+                <Typography className={classes.input}>
+                    {open ? <input type="text" placeholder="search..."
+                    style={{padding : "0.3rem", border: "none", 
+                    borderBottom : "1px solid #000", outline : "none"}}
+                    /> : ""}
+                    <span style={{cursor : "pointer"}}><SearchIcon onClick={() => setOpen(!open)}/></span>
+                    <Badge badgeContent={productState.product.length} color="primary">
+                    <span onClick={() => navigate('/card')} style={{marginLeft:20, cursor : "pointer"}}>
+                        < ShoppingCartIcon/>
+                    </span>
+                    </Badge>
+                    <span style={{marginLeft:20, cursor : "pointer"}}><AccountCircleIcon/></span>
+                </Typography>
             </Container>
-        </Navbar>
+        </AppBar>
     )
 }
 
